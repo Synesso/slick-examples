@@ -23,7 +23,14 @@ of all available examples:
 * MultiDBExample: Shows how to write portable code based on a SLICK profile
   and run it against different DBMSs.
 
+* MultiDBCakeExample: Shows how to write portable code based on a SLICK profile
+  and run it against different DBMSs using the Cake Pattern.
+
 * UseInvoker: Shows various ways of reading data from an Invoker.
 
 * CallNativeDBFunction: Shows how to use a database function which is not
   provided by the SLICK driver in the Query Language.
+
+* PlainSQL: Shows how to execute custom SQL.
+
+* SimpleExample: Shows how to write portable code using direct mapping.
