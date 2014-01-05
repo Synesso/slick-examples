@@ -56,7 +56,7 @@ trait UserComponent { this: Profile with PictureComponent => //requires Profile 
 /**
  * The Data Access Layer contains all components and a profile
  */
-class DAL(override val profile: JdbcProfile) extends UserComponent with PictureComponent with Profile {
+trait DAL extends UserComponent with PictureComponent with Profile {
   import profile.simple._
   def create(implicit session: Session): Unit = {
     (users.ddl ++ pictures.ddl).create //helper method to create all tables
@@ -95,9 +95,18 @@ object MultiDBCakeExample {
   }
 
   def main(args: Array[String]) {
-    run("H2", new DAL(H2Driver),
+
+    val h2DAL = new DAL {
+      override val profile = H2Driver
+    }
+
+    val sqLiteDAL = new DAL {
+      override val profile = SQLiteDriver
+    }
+
+    run("H2", h2DAL,
       Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver"))
-    run("SQLite", new DAL(SQLiteDriver),
+    run("SQLite", sqLiteDAL,
       Database.forURL("jdbc:sqlite::memory:", driver = "org.sqlite.JDBC"))
   }
 }
